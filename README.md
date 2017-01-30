@@ -14,7 +14,7 @@ In your Hiera YAML, do something like:
 facts::external::instance: { server_comment: { value: "Dont reboot me!" } }
 ```
 
-or: 
+or:
 
 ```
 facts::external::instance:
@@ -31,6 +31,15 @@ facts::instance { 'mypuppetclass_applied':
 facts::instance { 'mypuppetclass_applied_timestamp':
   value => strftime("%Y-%m-%d"),
 }
+```
+
+For Windows nodes, we must specify a facterpath:
+
+```
+facts::external::instance:
+  server_comment:
+    value: "Dont reboot me!"
+    facterpath: 'C:/ProgramData/PuppetLabs/facter/facts.d'
 ```
 
 Support

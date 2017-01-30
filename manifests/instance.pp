@@ -2,19 +2,36 @@
 #
 define facts::instance (
   $ensure     = present,
-  $command    = 'mkdir -p',
-  $path       = '/bin',
   $facterpath = '/etc/facter/facts.d',
   $factname   = $name,
   $value      = undef,
   $format     = 'txt',
-  $group      = 'root',
-  $owner      = 'root',
-  $mode       = '0664'
 ) {
 
   if versioncmp($::facterversion, '1.7') == -1 {
     fail('facts::instance requires a Facter version >= 1.7')
+  }
+
+  # OS specifics
+  $command    = $::osfamily ? {
+    'Windows' => 'cmd /c mkdir',
+    default   => 'mkdir -p'
+  }
+  $path       = $::osfamily ? {
+    'Windows' => $::path,
+    default   => '/bin'
+  }
+  $group      = $::osfamily ? {
+    'Windows' => 'Administrators',
+    default   => 'root'
+  }
+  $owner      = $::osfamily ? {
+    'Windows' => 'Administrators',
+    default   => 'root'
+  }
+  $mode       = $::osfamily ? {
+    'Windows' => '0775',
+    default   => '0664'
   }
 
   exec { "${name} ${command} ${facterpath}":
