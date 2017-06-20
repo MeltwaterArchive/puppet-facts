@@ -1,5 +1,9 @@
-facts
-=====
+[DEPRECATED] facts
+==================
+
+NOTE: This repository is no longer maintained
+---------------------------------------------
+
 
 This module allows you to create Puppet Facts using Puppet code or your Hiera backend.
 
