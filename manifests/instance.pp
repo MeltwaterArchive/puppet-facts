@@ -5,6 +5,8 @@ define facts::instance (
   $facterpath = '/etc/facter/facts.d',
   $factname = $name,
   $value = undef,
+  $group = 'root',
+  $owner = 'root',
 ) {
 
   if versioncmp($::facterversion, '1.7') == -1 {
@@ -20,8 +22,8 @@ define facts::instance (
   file { "${facterpath}/${factname}.txt":
     ensure  => $ensure,
     content => "${factname}=${value}",
-    group   => 'root',
+    group   => $group,
     mode    => '0664',
-    owner   => 'root',
+    owner   => $owner,
   }
 }
